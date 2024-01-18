@@ -13,6 +13,13 @@ public struct PublicationPage_v2: Equatable {
     public var title: String?
     public var aspectRatio: Double
     public var images: Set<ImageURL>
+    
+    public init(index: Int, title: String? = nil, aspectRatio: Double, images: Set<ImageURL>) {
+        self.index = index
+        self.title = title
+        self.aspectRatio = aspectRatio
+        self.images = images
+    }
 }
 
 // MARK: -
@@ -27,6 +34,15 @@ public struct HotspotOffer_v2: Equatable {
     public var quantity: Offer_v2.Quantity?
     public var runDateRange: Range<Date>
     public var publishDate: Date?
+    
+    public init(id: ID, heading: String, price: Offer_v2.Price? = nil, quantity: Offer_v2.Quantity? = nil, runDateRange: Range<Date>, publishDate: Date? = nil) {
+        self.id = id
+        self.heading = heading
+        self.price = price
+        self.quantity = quantity
+        self.runDateRange = runDateRange
+        self.publishDate = publishDate
+    }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
