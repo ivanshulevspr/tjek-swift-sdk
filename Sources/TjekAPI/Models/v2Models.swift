@@ -42,6 +42,7 @@ public struct Publication_v2: Equatable {
     /// If it contains `incito`, the `id` can be used to view this with the IncitoViewer
     /// If it ONLY contains `incito`, this cannot be viewed in a PagedPublicationViewer (see `isOnlyIncito`)
     public var types: Set<PublicationType>
+    public var tags: Set<String>?
 }
 
 extension Publication_v2 {
@@ -74,6 +75,7 @@ extension Publication_v2: Decodable {
         case dimensions
         case frontPageImageURLs = "images"
         case types
+        case tags
     }
     
     public init(from decoder: Decoder) throws {
@@ -108,6 +110,7 @@ extension Publication_v2: Decodable {
         self.frontPageImages = (try? values.decode(v2ImageURLs.self, forKey: .frontPageImageURLs))?.imageURLSet ?? []
                 
         self.types = (try? values.decode(Set<PublicationType>.self, forKey: .types)) ?? [.paged]
+        self.tags = (try? values.decode(Set<String>.self, forKey: .tags)) ?? []
     }
 }
 
