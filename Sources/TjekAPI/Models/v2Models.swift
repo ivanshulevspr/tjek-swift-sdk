@@ -24,6 +24,8 @@ public struct Publication_v2: Equatable {
     public var offerCount: Int
     /// The range of dates that this publication is valid from and until.
     public var runDateRange: Range<Date>
+    /// display_run_till
+    public var displayRunTill: Bool
     /// The ratio of width to height for the page-images. So if an image is (w:100, h:200), the aspectRatio is 0.5 (width/height).
     public var aspectRatio: Double
     /// The branding information for the publication's dealer.
@@ -69,6 +71,7 @@ extension Publication_v2: Decodable {
         case offerCount         = "offer_count"
         case runFromDateStr     = "run_from"
         case runTillDateStr     = "run_till"
+        case displayRunTill     = "display_run_till"
         case businessId           = "dealer_id"
         case storeId            = "store_id"
         case availableAllStores = "all_stores"
@@ -92,6 +95,7 @@ extension Publication_v2: Decodable {
         let tillDate = (try? values.decode(Date.self, forKey: .runTillDateStr)) ?? Date.distantFuture
         // make sure range is not malformed
         self.runDateRange = min(tillDate, fromDate) ..< max(tillDate, fromDate)
+        self.displayRunTill = (try? values.decode(Bool.self, forKey: .displayRunTill)) ?? true
         
         if let dimDict = try? values.decode([String: Double].self, forKey: .dimensions),
            let width = dimDict["width"], let height = dimDict["height"] {
